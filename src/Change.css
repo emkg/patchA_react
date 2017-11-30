@@ -1,0 +1,16 @@
+.Change {
+  border: solid 2px black;
+  width: 50%;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+span.data {
+  font-weight: normal;
+  justify-content: flex-end;
+}
+
+span.label {
+  justify-content: flex-start;;
+}

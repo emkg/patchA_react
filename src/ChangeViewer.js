@@ -19,14 +19,19 @@ export default class ChangeViewer extends React.Component {
    }
 
    const data = await req.json();
-   this.setState({data});
+   let changes = [];
+   data.forEach(function(change) {
+      console.log(change);
+      changes.push(<Change data={change} />)
+   });
+   this.setState({changes});
   }
 
   render() {
-    const {data} = this.state;
-    console.log(data);
+    const {changes} = this.state;
+    //console.log();
     return (
-      <div>{ data[0].date }</div>
+      <div>{ changes }</div>
     );
   }
 }
