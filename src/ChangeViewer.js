@@ -2,6 +2,11 @@ import React from 'react';
 import Change from './Change';
 import ChangeForm from './ChangeForm';
 import ExceptionForm from './ExceptionForm';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 
 export default class ChangeViewer extends React.Component {
   constructor(props) {
@@ -33,11 +38,22 @@ export default class ChangeViewer extends React.Component {
     const {changes} = this.state;
 
     return (
-      <div>
-        { changes }
-        <ChangeForm />
-        <ExceptionForm />
-      </div>
+      <Router>
+         <div>
+           <ul>
+             <Link to="/">Alerts</Link>
+             <br/>
+             <Link to="/change">Request an IT Change</Link>
+           </ul>
+
+           <hr/>
+
+           <Route exact path="/" render={ () =>  <div>{changes}</div> }/>
+           <Route path="/change" component={ChangeForm}/>
+         </div>
+       </Router>
+
+
     );
   }
 }
