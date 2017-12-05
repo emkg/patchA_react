@@ -1,5 +1,7 @@
 import React from 'react';
 import Change from './Change';
+import ChangeForm from './ChangeForm';
+import ExceptionForm from './ExceptionForm';
 
 export default class ChangeViewer extends React.Component {
   constructor(props) {
@@ -29,9 +31,13 @@ export default class ChangeViewer extends React.Component {
 
   render() {
     const {changes} = this.state;
-    //console.log();
+
     return (
-      <div>{ changes }</div>
+      <div>
+        { changes }
+        <ChangeForm />
+        <ExceptionForm />
+      </div>
     );
   }
 }

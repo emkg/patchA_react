@@ -1,7 +1,7 @@
 import React from 'react';
 import './Change.css';
-
-
+import ExceptionForm from './ExceptionForm';
+import ChangeForm from './ChangeForm';
 
 export default class Change extends React.Component {
   constructor(props) {
@@ -10,12 +10,13 @@ export default class Change extends React.Component {
       id: this.props.data.id,
       status: this.props.data.status,
     };
+  }
 
+  getForm() {
+    return this.state.status === 1 ? <ExceptionForm /> : <ChangeForm />;
   }
 
   render() {
-
-
     return (
 
         <div className='Change'>
