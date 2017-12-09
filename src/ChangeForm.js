@@ -2,15 +2,22 @@ import React from 'react';
 import './ChangeForm.css';
 
 let title = "Change Form";
-
+const stop = (e) => (e.stopPropagation(), e.preventDefault());
 export default class ChangeForm extends React.Component {
-  onClick() {
-    fetch('/api/addTicket.php');
+
+  handleSubmit = async e => {
+    stop(e);
+
+    const data = new FormData(e.target);
+    await fetch('/api/addTicket.php', {
+      'method' : 'post',
+      'body' : JSON.stringify(data)
+    });
   }
   render() {
     return (
       <div>
-        <form action='POST' onSubmit={this.onClick}>
+        <form onSubmit={this.handleSubmit}>
           <h3>{title}</h3>
           <p>What are the details of this request? Why should this change be implemented?
           Please include the consequences of not implementing this change.</p>
