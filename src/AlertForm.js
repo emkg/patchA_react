@@ -1,8 +1,10 @@
 import React from 'react';
-import './ChangeForm.css';
+import './AlertForm.css';
 import { Redirect } from 'react-router-dom';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import "react-day-picker/lib/style.css";
 
-let title = "Change Form";
+let title = "Set Up an Alert";
 
 const stop = (event) => (event.stopPropagation(), event.preventDefault());
 
@@ -10,19 +12,25 @@ export default class ChangeForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      whatwhy: 'update all the computers because they need it',
-      how: 'reboot and install',
-      duration: 'forever',
-      software: '',
+      selectedDay: undefined,
+      time: undefined,
+      ticketID: undefined,
+      software: undefined,
+      duration: undefined,
+      personalMessage: undefined,
       user: 'Your name:',
       email: 'Your noaa.gov email:',
-      exception: 0,
       success: false,
       redirect: '/'
     };
 
+    this.handleDayChange = this.handleDayChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleDayChange = (day) => {
+    this.setState({ selectedDay: day.toLocaleDateString() });
   }
 
   handleChange = (event) => {
@@ -41,7 +49,7 @@ export default class ChangeForm extends React.Component {
     const data = this.state;
     this.setState({ success: !this.state.success })
     console.log(data);
-    await fetch('/api/addTicket.php', {
+    await fetch('/api/createAlert.php', {
       'method' : 'post',
       'body' : JSON.stringify(data)
     });
@@ -52,25 +60,22 @@ export default class ChangeForm extends React.Component {
         <div>
           <form onSubmit={this.handleSubmit}>
             <h3>{title}</h3>
-            <p>What are the details of this request? Why should this change be implemented?
-            Please include the consequences of not implementing this change.</p>
-            <textarea type='text'
-                      rows='5'
-                      name='whatwhy'
-                      value={this.state.whatwhy}
-                      onChange={this.handleChange}></textarea>
-            <p>Provide a suggested implementation plan including contingency (rollback) plans.</p>
-            <textarea type='text'
-                      name='how'
-                      rows='5'
-                      value={this.state.how}
-                      onChange={this.handleChange}></textarea>
-            <p>What is the timeframe for this change?</p>
-            <textarea type='text'
-                      rows='2'
-                      name='duration'
-                      value={this.state.duration}
-                      onChange={this.handleChange}></textarea>
+            <p>On what day will the change take place?</p>
+            <DayPickerInput
+                      placeholder='DD/MM/YYYY'
+                      format="DD/MM/YYYY"
+                      name='selectedDay'
+                      onDayChange={this.handleDayChange} />
+            <p>At what time:</p>
+            <input    type='time'
+                      name='time'
+                      value={this.state.time}
+                      onChange={this.handleChange}></input>
+            <p>What is the ticket id for the ticket applicable to this service alert?</p>
+            <input    type='text'
+                      name='ticketID'
+                      value={this.state.ticketID}
+                      onChange={this.handleChange}></input>
             <p>What software systems will be affected (if known)?</p>
             <select name='software' value={this.state.software} onChange={this.handleChange}>
               <option value="Mac">Mac</option>

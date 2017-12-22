@@ -1,14 +1,14 @@
 import React from 'react';
-import './Change.css';
+import './Alert.css';
 import ExceptionForm from './ExceptionForm';
-import ChangeForm from './ChangeForm';
+import AlertForm from './AlertForm';
 import {
   BrowserRouter as Router,
   Route,
   Link
 } from 'react-router-dom';
 
-export default class Change extends React.Component {
+export default class Alert extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,13 +18,13 @@ export default class Change extends React.Component {
   }
 
   getForm() {
-    return this.state.status === 1 ? <ExceptionForm /> : <ChangeForm />;
+    return this.state.status === 1 ? <ExceptionForm /> : <AlertForm />;
   }
 
   render() {
     return (
         <Router>
-          <div className='Change'>
+          <div className='Alert'>
             <h4><span className='label'> WHAT and WHY:</span>
             <span className='data'>{this.props.data.whatwhy}</span></h4>
 
